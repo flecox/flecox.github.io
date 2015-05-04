@@ -8,10 +8,10 @@ tagline: My programming blog!
 ##I'm Gonzalo Almeida
 
 
-<img src="{{ site.url }}/assets/images/gonzo.jpg" alt="Drawing" style="width: 150px; float: right; padding: 20px;"/>
+<img src="{{ site.url }}/assets/images/gonzo.jpg" alt="Drawing" style="width: 200px; float: right; padding: 20px;"/>
 
 
-A freelance web developer and traveler, I love meeting new people and leanrning new things all the time.
+_A freelance web developer and traveler_, I love meeting new people and leanrning new things all the time.
 I mostly use Python (django) and Javascript(learning react.js now) for working and personal stuff, I also have some experience on low level apps but I haven't use c/c++ in a while heh.
 
 
