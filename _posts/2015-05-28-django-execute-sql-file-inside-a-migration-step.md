@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Django: inital data from a sql file inside a migration step"
+title: "Django: execute sql file inside a migration step"
 description: "How to execute a sql file in a migration step, for initial data or data migration"
 category: django
 tags: [django, migration, initial-data, sql, file, migration-step, programming, web, backend]
@@ -73,7 +73,7 @@ now we have to add operations to the operations list, and we should be able to r
 ```Python
 import os
 
-from django.db import connection, models, migrations
+from django.db import connection, migrations
 
 def load_data_from_sql(filename):
     file_path = os.path.join(os.path.dirname(__file__), '../sql/', filename)
