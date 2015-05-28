@@ -13,17 +13,17 @@ for example if we have the following directory structure, of a django app:
 
 
 {% highlight %}
-  - app_name/
-    - sql/
-      - initial_data.sql
-      - migrate_data.sql
-    - migrations/
-      - __init__.py
-      - 0001_initial.py
-    - models.py
-    - views.py
-    - urls.py
+- app_name/
+  - sql/
+    - initial_data.sql
+    - migrate_data.sql
+  - migrations/
     - __init__.py
+    - 0001_initial.py
+  - models.py
+  - views.py
+  - urls.py
+  - __init__.py
 {% endhighlight %}
 
 then run:
