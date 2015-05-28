@@ -10,6 +10,8 @@ tags: [django, migration, initial-data, sql, file, migration-step, programming, 
 If we come from django < 1.7 and we have some initial data, or in a particular migration step we want to run some sql code from a file to do a data migration. here's they way:
 
 for example if we have the following directory structure, of a django app:
+
+
 ```
   - app_name/
     - sql/
@@ -26,16 +28,21 @@ for example if we have the following directory structure, of a django app:
 
 then run:
 
+
 ```
 python manage.py makemigrations --empty app_name
 ```
+
 where ```app_name``` is  the name of our application. Then we can rename the new generated file to to ```0002_intial_data.py``` or whatever other name is good for us.
 If we are using django >= 1.8 we can do just this (I didn't try it yet):
+
 
 ````
 python manage.py makemigrations --name inital_data --empty app_name
 ```
+
 now our directory structure will be like this (with a new migration file)
+
 
 ```
   - app_name/
@@ -54,9 +61,9 @@ now our directory structure will be like this (with a new migration file)
 
 if we open our new migration file we will see something like this:
 
+
 ```Python
 from django.db import models, migrations
-
 
 class Migration(migrations.Migration):
 
@@ -69,6 +76,7 @@ class Migration(migrations.Migration):
 ```
 
 now we have to add operations to the operations list, and we should be able to run python code. So what we need is the method ```RunPython``` from the django migrations module.
+
 
 ```Python
 import os
