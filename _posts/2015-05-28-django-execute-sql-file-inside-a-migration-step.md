@@ -81,7 +81,7 @@ def load_data_from_sql(filename):
     with connection.cursor() as c:
         c.execute(sql_statement)
 
-initial_data = lambda: load_data_from_sql('inital_data.sql')
+initial_data = lambda: load_data_from_sql('initial_data.sql')
 migrate_data = lambda: load_data_from_sql('migrate_data.sql')
 
 
