@@ -12,8 +12,7 @@ If we come from django < 1.7 and we have some initial data, or in a particular m
 for example if we have the following directory structure, of a django app:
 
 
-<pre>
-  <code>
+{% highlight %}
   - app_name/
     - sql/
       - initial_data.sql
@@ -25,8 +24,7 @@ for example if we have the following directory structure, of a django app:
     - views.py
     - urls.py
     - __init__.py
-  </code>
-</pre>
+{% endhighlight %}
 
 then run:
 
