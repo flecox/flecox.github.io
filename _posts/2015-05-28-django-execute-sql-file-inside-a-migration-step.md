@@ -84,7 +84,7 @@ class Migration(migrations.Migration):
 now we have to add operations to the operations list, and we should be able to run python code. So what we need is the method ```RunPython``` from the django migrations module.
 
 
-```Python
+{% highlight python %}
 import os
 
 from django.db import connection, migrations
@@ -110,7 +110,7 @@ class Migration(migrations.Migration):
         migrations.RunPython(migrate_data),
     ]
 
-```
+{% endhighlight %}
 
   * First we create a function that given a file name, reads that file from the app's migrations directory and execute the sql code of that file in the database.
   * then we create some "on the fly" functions or "lambda" functions for every file that we need to execute.
