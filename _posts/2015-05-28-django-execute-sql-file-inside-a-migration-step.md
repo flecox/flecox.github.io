@@ -39,7 +39,7 @@ where ```app_name``` is  the name of our application. Then we can rename the new
 If we are using django >= 1.8 we can do just this (I didn't try it yet):
 
 
-````
+```
 python manage.py makemigrations --name inital_data --empty app_name
 ```
 
@@ -66,8 +66,7 @@ now our directory structure will be like this (with a new migration file)
 if we open our new migration file we will see something like this:
 
 
-<pre>
-  <code class="python">
+{% highlight python %}
 from django.db import models, migrations
 
 class Migration(migrations.Migration):
@@ -78,8 +77,7 @@ class Migration(migrations.Migration):
 
     operations = [
     ]
-  </code>
-</pre>
+{% endhighlight%}
 
 now we have to add operations to the operations list, and we should be able to run python code. So what we need is the method ```RunPython``` from the django migrations module.
 
