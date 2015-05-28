@@ -12,7 +12,8 @@ If we come from django < 1.7 and we have some initial data, or in a particular m
 for example if we have the following directory structure, of a django app:
 
 
-```
+<pre>
+  <code>
   - app_name/
     - sql/
       - initial_data.sql
@@ -24,7 +25,8 @@ for example if we have the following directory structure, of a django app:
     - views.py
     - urls.py
     - __init__.py
-```
+  </code>
+</pre>
 
 then run:
 
@@ -44,7 +46,8 @@ python manage.py makemigrations --name inital_data --empty app_name
 now our directory structure will be like this (with a new migration file)
 
 
-```
+<pre>
+  <code>
   - app_name/
     - sql/
       - initial_data.sql
@@ -57,12 +60,14 @@ now our directory structure will be like this (with a new migration file)
     - views.py
     - urls.py
     - __init__.py
-```
+  </code>
+</pre>
 
 if we open our new migration file we will see something like this:
 
 
-```Python
+<pre>
+  <code class="python">
 from django.db import models, migrations
 
 class Migration(migrations.Migration):
@@ -73,7 +78,8 @@ class Migration(migrations.Migration):
 
     operations = [
     ]
-```
+  </code>
+</pre>
 
 now we have to add operations to the operations list, and we should be able to run python code. So what we need is the method ```RunPython``` from the django migrations module.
 
