@@ -12,7 +12,7 @@ If we come from django < 1.7 and we have some initial data, or in a particular m
 for example if we have the following directory structure, of a django app:
 
 
-{% highlight %}
+{% highlight python %}
 - app_name/
   - sql/
     - initial_data.sql
