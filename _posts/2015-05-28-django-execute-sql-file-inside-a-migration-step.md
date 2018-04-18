@@ -5,7 +5,7 @@ description: "How to execute a sql file in a migration step, for initial data or
 category: django
 tags: [django, migration, initial-data, sql, file, migration-step, programming, web, backend]
 ---
-{% include JB/setup %}
+
 
 If we come from django < 1.7 and we have some initial data, or in a particular migration step we want to run some sql code from a file to do a data migration. here's they way:
 
