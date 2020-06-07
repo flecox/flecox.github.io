@@ -26,7 +26,7 @@
                 width: 100%;
                 height: 70px;
                 background-color: #fa9344;
-                font-size: 20px;
+                font-size: 15px;
                 color: #FFF;
                 font-family: Arial, Helvetica, sans-serif;
             }
@@ -41,7 +41,7 @@
 
             .navbar-expand-sm .navbar-nav   li a.nav-link {
                 color: #FFF;
-                padding-bottom: 18px;
+                padding-bottom: 25px;
                 padding-top: 22px;
                 padding-right: 10px;
                 padding-left: 10px;
@@ -66,6 +66,11 @@
             .form h3 {
                 color: #3d3f92;
                 font-weight: bold;
+            }
+
+            #tshirt-canvas-main {
+                position: absolute;
+                right:0;
             }
 
             .drawing-area{
@@ -138,11 +143,10 @@
                 Initially, the image will have the background tshirt that has transparency
                 So we can simply update the color with CSS or JavaScript dinamically
             -->
-            <img id="tshirt-backgroundpicture" src="./background_tshirt.png"/>
-
+            <canvas id="tshirt-canvas-main" width="452" height="548"></canvas>
             <div id="drawingArea" class="drawing-area">					
                 <div class="canvas-container">
-                    <canvas id="tshirt-canvas" width="220" height="400"></canvas>
+                    <canvas id="tshirt-canvas-logo" width="220" height="400"></canvas>
                 </div>
             </div>
         </div>
@@ -153,8 +157,26 @@
                <h3>Elige el color y selecciona o carga el logo...</h3><br/><br/>
                 <!-- The select that will allow the user to pick one of the static designs -->
                                 <!-- The Select that allows the user to change the color of the T-Shirt -->
+            
+            <div class="form-group">
+                <label for="tshirt-type-selector">Tipo de remera:</label>
+                <select id="tshirt-type-selector" class="form-control">
+                    <option value="./background_tshirt.png" selected=true>Diseño 1</option>
+                    <option value="./background_tshirt2.png">Diseño 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tshirt-texture-selector">Textura:</label>
+                <select id="tshirt-texture-selector" class="form-control">
+                    <option value="notexture" selected=true data-color=true>Sin textura</option>
+                    <option value="texture1.png" data-color=false>Textura 1</option>
+                    <option value="texture2.png" data-color=true>Textura 2</option>
+                    <option value="texture3.png" data-color=false>Textura 3</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="color-selector">
                 <label for="tshirt-color">Color de la Remera:</label>
-                <div class="form-group">
                 <select id="tshirt-color" class="form-control">
                     <!-- You can add any color with a new option and definings its hex code -->
                     <option value="#fff">Blanca</option>
@@ -163,40 +185,102 @@
                     <option value="#008000">Verde</option>
                     <option value="#ff0">Amarilla</option>
                 </select>
-                </div>
+            </div>
                 
-                <div class="form-group">
-                <select id="tshirt-design" class="form-control">
+            <div class="form-group">
+                <select id="tshirt-logo-selector" class="form-control">
                     <option value="">Seleccione uno de nuestros logos ...</option>
                     <option value="./logo.png">Compañia</option>
                     <option value="./logo2.png">Logo lindo</option>
                 </select>
-                </div>
+            </div>
                 
-                <div class="form-group">
+            <div class="form-group">
                     <div class="custom-file">
-                        
-                        <input type="file" id="tshirt-custompicture" class="form-control form-control-file custom-file-input"/>
-                        <label class="custom-file-label" for="tshirt-custompicture">Carga tu logo</label>
+                        <input type="file" id="tshirt-logo-uploader" class="form-control form-control-file custom-file-input"/>
+                        <label class="custom-file-label" for="tshirt-logo-uploader">Carga tu logo</label>
                     </div>
-                </div>
+            </div>
                 <br />
                 Para eliminar una imagen cargada en la remera, seleccionela  y presione la tecla <kbd>DEL</kbd>. <br/>
                 <!-- Include Fabric.js in the page -->
+            </div>
                 <script src="./fabric.min.js"></script>
     
                 <script>
-                    let canvas = new fabric.Canvas('tshirt-canvas');
-    
-                    function updateTshirtImage(imageURL){
+                    let canvas_logo = new fabric.Canvas('tshirt-canvas-logo');
+                    let canvas_shirt = new fabric.StaticCanvas('tshirt-canvas-main');
+                    let logo = undefined;
+                    let last_type = undefined;
+                    let last_texture = undefined;
+
+                    function updateLogo(imageURL){
                         fabric.Image.fromURL(imageURL, function(img) {                   
                             img.scaleToHeight(300);
                             img.scaleToWidth(220); 
-                            img.opacity = 0.8;
-                            canvas.centerObject(img);
-                            canvas.add(img);
-                            canvas.renderAll();
+                            img.opacity = 1;
+                            canvas_logo.centerObject(img);
+                            canvas_logo.add(img);
+                            canvas_logo.renderAll();
+                            logo = img;
                         });
+                    }
+
+                    function updateType(imageURL) {
+                        fabric.Image.fromURL(imageURL, function(img) {                   
+                            img.scaleToHeight(548);
+                            img.scaleToWidth(452); 
+                            img.opacity = 1;
+                            canvas_shirt.centerObject(img);
+                            canvas_shirt.add(img);
+                            img.moveTo(1);
+                            canvas_shirt.renderAll();
+                            if (last_type) {
+                                canvas_shirt.remove(last_type);
+                            }
+                            last_type = img;
+                        });
+                    }
+
+
+                    function updateTexture(imageURL) {
+                        if (imageURL === "notexture" && last_texture) {
+                            canvas_shirt.remove(last_texture);
+                            last_texture = undefined;
+                        } else {}
+                            fabric.Image.fromURL(imageURL, function(img) {                   
+                                img.scaleToHeight(548);
+                                img.scaleToWidth(452); 
+                                img.opacity = 1;
+                                canvas_shirt.centerObject(img);
+                                canvas_shirt.add(img);
+                                img.moveTo(0);
+                                canvas_shirt.renderAll();
+                                if (last_texture) {
+                                    canvas_shirt.remove(last_texture);
+                                }
+                                last_texture = img;
+                            });
+                        texture_color = {
+                            "notexture" : true,
+                            "texture1.png" : false, 
+                            "texture2.png" : true, 
+                            "texture3.png" : false
+                        }
+
+                        if (texture_color[imageURL]) {
+                            document.getElementById("color-selector").style.display = "block";
+                        }
+                        else {
+                            document.getElementById("color-selector").style.display = "none";
+                        }
+
+                    }
+
+                    function need_color(texture) {
+                        texture_colot = {
+
+                        }
                     }
                     
                     // Update the TShirt color according to the selected color by the user
@@ -205,15 +289,25 @@
                     }, false);
     
                     // Update the TShirt color according to the selected color by the user
-                    document.getElementById("tshirt-design").addEventListener("change", function(){
-    
+                    document.getElementById("tshirt-logo-selector").addEventListener("change", function(){
                         // Call the updateTshirtImage method providing as first argument the URL
                         // of the image provided by the select
-                        updateTshirtImage(this.value);
+                        updateLogo(this.value);
+                    }, false);
+
+                    document.getElementById("tshirt-type-selector").addEventListener("change", function(){
+                        // Call the updateTshirtImage method providing as first argument the URL
+                        // of the image provided by the select
+                        updateType(this.value);
+                    }, false);
+                    document.getElementById("tshirt-texture-selector").addEventListener("change", function(){
+                        // Call the updateTshirtImage method providing as first argument the URL
+                        // of the image provided by the select
+                        updateTexture(this.value);
                     }, false);
     
                     // When the user clicks on upload a custom picture
-                    document.getElementById('tshirt-custompicture').addEventListener("change", function(e){
+                    document.getElementById('tshirt-logo-uploader').addEventListener("change", function(e){
                         var reader = new FileReader();
                         
                         reader.onload = function (event){
@@ -223,12 +317,12 @@
                             // When the picture loads, create the image in Fabric.js
                             imgObj.onload = function () {
                                 var img = new fabric.Image(imgObj);
-    
                                 img.scaleToHeight(300);
                                 img.scaleToWidth(300); 
-                                canvas.centerObject(img);
-                                canvas.add(img);
-                                canvas.renderAll();
+                                canvas_logo.centerObject(img);
+                                canvas_logo.add(img);
+                                canvas_logo.renderAll();
+                                logo = img;
                             };
                         };
     
@@ -248,6 +342,8 @@
                             canvas.remove(canvas.getActiveObject());
                         }
                     }, false);
+
+                    updateType("background_tshirt.png");
                 </script>
             </div>
             </form>
